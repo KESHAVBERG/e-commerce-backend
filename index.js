@@ -19,6 +19,7 @@ mongoose.connect(process.env.url).then(()=>{
 
 app.use(express.json())
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/users", userroutes);
 
 
  app.listen(8000, ()=>{

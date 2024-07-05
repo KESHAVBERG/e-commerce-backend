@@ -1,7 +1,7 @@
 const userModel = require('../models/user');
 const asyncHandler = require("express-async-handler");
 const crptoJS = require("crypto-js");
-
+const jwtToken = require("jsonwebtoken");
 
 exports.register = asyncHandler(async(req,res)=>{
     var {name, email, password} = req.body;
@@ -27,16 +27,22 @@ exports.register = asyncHandler(async(req,res)=>{
 
 
 exports.login = asyncHandler(async(req, res)=>{
-    var {email, password} = req.body;
+    var {email, Userpassword} = req.body;
     const user =await userModel.findOne({email:email});
     if(!user){
         return res.status(401).send({error:"User Not found"});
     }
     const decryptedPasword = crptoJS.AES.decrypt(user.password, process.env.screatekey).toString(crptoJS.enc.Utf8);
-    if(password !== decryptedPasword){
+    if(Userpassword !== decryptedPasword){
         return res.status(400).send({error:"Wrong password"});
     }
+    const accessToken = jwtToken.sign({
+        id:user._id,
+        isAdmin:user.isAdmin,
+    }, process.env.jwt_screate, {expiresIn:"3d"});
 
-    return res.status(201).send(user);
+    const {password, ...others} = user._doc;
+
+    return res.status(201).send({...others, accessToken:accessToken});
 
 })
