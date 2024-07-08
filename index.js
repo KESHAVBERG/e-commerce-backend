@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const userroutes = require('./routes/users')
 const authRoutes = require('./routes/auth')
-
+const cookieParser = require("cookie-parser")
 dotenv.config();
 
 
@@ -16,7 +16,7 @@ mongoose.connect(process.env.url).then(()=>{
 });
 
 
-
+app.use(cookieParser());
 app.use(express.json())
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userroutes);
