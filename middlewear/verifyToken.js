@@ -17,4 +17,15 @@ const verifyJWTToken = (req,res,next)=>{
 }
 
 
-module.exports = {verifyJWTToken}
+const verifyTokenAndAuthorization = (req, res, next)=>{
+    verifyJWTToken(req, res, ()=>{
+        if(req.user.id === req.params.id || req.user.isAdmin){
+            next();
+        }else{
+            res.status(403).send({error:"Not a vaild function"});
+        }
+    })
+}
+
+
+module.exports = {verifyJWTToken, verifyTokenAndAuthorization}

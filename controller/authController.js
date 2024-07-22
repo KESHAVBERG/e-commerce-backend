@@ -46,3 +46,18 @@ exports.login = asyncHandler(async(req, res)=>{
     return res.status(201).send({...others, accessToken:accessToken});
 
 })
+
+exports.updateUserDetails = asyncHandler(async (req,res)=>{
+    if(req.body.password){
+        req.body.password = crptoJS.AES.encrypt(password, process.env.screatekey).toString();
+    }
+    try{
+    console.log(req.params.id)
+    const updateduser = await userModel.findOneAndUpdate({_id:req.params.id},{
+        $set:req.body,
+    });
+    return res.status(200).send(updateduser)
+    }catch(e){
+        return res.status(500).json(e);
+    }
+})
