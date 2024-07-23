@@ -1,7 +1,9 @@
 const {verifyTokenAndAuthorization} = require("../middlewear/verifyToken");
-const {updateUserDetails} = require("../controller/authController")
+const {updateUserDetails, deleteUser} = require("../controller/authController")
 // const {}
 const router = require("express").Router();
 
-router.post("/updatePassword/:id", verifyTokenAndAuthorization, updateUserDetails);
+router.post("/updateUserDetails/:id", verifyTokenAndAuthorization, updateUserDetails);
+
+router.delete("/deleteUser/:id", verifyTokenAndAuthorization,deleteUser)
 module.exports = router;

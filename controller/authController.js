@@ -61,3 +61,12 @@ exports.updateUserDetails = asyncHandler(async (req,res)=>{
         return res.status(500).json(e);
     }
 })
+
+exports.deleteUser = asyncHandler(async(req,res)=>{
+    try{
+        await userModel.findByIdAndDelete({_id:req.params.id});
+        return res.status(200).send({msg:"user Deletion successful"});
+    }catch(e){
+        return res.status(500).send(e)
+    }
+});

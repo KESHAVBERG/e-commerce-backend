@@ -27,5 +27,16 @@ const verifyTokenAndAuthorization = (req, res, next)=>{
     })
 }
 
+// To check if the user is Admin
+
+const verifyTokenAndAdmin = (req, res, next)=>{
+    verifyJWTToken(req, res, ()=>{
+        if(req.user.isAdmin){
+            next9();
+        }else{
+            res.status(500).send({error:"Not authorized as admin"});
+        }
+    })
+}
 
 module.exports = {verifyJWTToken, verifyTokenAndAuthorization}
