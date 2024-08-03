@@ -3,9 +3,10 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const userroutes = require('./routes/users')
-const authRoutes = require('./routes/auth')
-const cookieParser = require("cookie-parser")
+const userroutes = require('./routes/users');
+const authRoutes = require('./routes/auth');
+const adminRoutes = require('./routes/admin');
+const cookieParser = require("cookie-parser");
 dotenv.config();
 
 
@@ -20,7 +21,7 @@ app.use(cookieParser());
 app.use(express.json())
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userroutes);
-
+app.use("/api/v1/admin", adminRoutes);
 
  app.listen(8000, ()=>{
     console.log("Sever running");

@@ -32,11 +32,11 @@ const verifyTokenAndAuthorization = (req, res, next)=>{
 const verifyTokenAndAdmin = (req, res, next)=>{
     verifyJWTToken(req, res, ()=>{
         if(req.user.isAdmin){
-            next9();
+            next();
         }else{
             res.status(500).send({error:"Not authorized as admin"});
         }
     })
 }
 
-module.exports = {verifyJWTToken, verifyTokenAndAuthorization}
+module.exports = {verifyJWTToken, verifyTokenAndAuthorization,verifyTokenAndAdmin}
