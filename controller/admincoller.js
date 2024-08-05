@@ -16,8 +16,11 @@ exports.findUser = asyncHandler(async (req, res) => {
 // Find All users
 
 exports.getAllUsers = asyncHandler(async (req, res) => {
+  const query = req.query.new;
   try {
-    const users = await userModel.find();
+    const users = query? 
+    await userModel.find().limit(5).sort({_id:-1})
+    :await userModel.find();
     res.status(200).send(users);
   } catch (e) {
     res.status(500).send({ erro: e });
