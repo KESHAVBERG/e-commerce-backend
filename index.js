@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 const userroutes = require('./routes/users');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
+const productRoutes = require("./routes/product")
 const cookieParser = require("cookie-parser");
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(express.json())
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userroutes);
 app.use("/api/v1/admin", adminRoutes);
+app.user("/api/v1/products", productRoutes);
 
  app.listen(8000, ()=>{
     console.log("Sever running");

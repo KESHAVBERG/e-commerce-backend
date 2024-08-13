@@ -21,8 +21,36 @@ exports.getAllUsers = asyncHandler(async (req, res) => {
     const users = query? 
     await userModel.find().limit(5).sort({_id:-1})
     :await userModel.find();
-    res.status(200).send(users);
+    return res.status(200).send(users);
   } catch (e) {
-    res.status(500).send({ erro: e });
+    return res.status(500).send({ erro: e });
   }
 });
+
+// Stats
+
+exports.getStats = asyncHandler(async(req, res)=>{
+  try{
+    const date = new Date();
+    const lastyear = new Date(date.setFullYear(date.getFullYear() - 1));
+    const data = await userModel.aggregate(
+      [
+        {$match:{createdAt:{$gte: lastyear}}},
+        {
+          $project:{
+            month:{$month:"$createdAt"},
+          },
+        },
+        {
+          $group:{
+            _id: "$month",
+            total:{$sum: 1}
+          },
+        },
+      ]
+    );
+    return res.status(200).send(data);
+  }catch(e){
+    return res.status(500).send({error:e})
+  }
+})
