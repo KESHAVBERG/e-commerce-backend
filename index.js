@@ -23,8 +23,8 @@ app.use(express.json())
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userroutes);
 app.use("/api/v1/admin", adminRoutes);
-app.user("/api/v1/products", productRoutes);
-
+app.use("/api/v1/admin/products", productRoutes);
+app.use("/itemImages", express.static('itemImages'))
  app.listen(8000, ()=>{
     console.log("Sever running");
  })
